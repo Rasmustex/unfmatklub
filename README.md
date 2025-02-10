@@ -1,2 +1,2 @@
 # unfmatklub
-Noter til diverse UNF Matematikklub-møder
+Undervisningsnoter til diverse UNF Matematikklub-møder
