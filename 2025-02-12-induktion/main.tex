@@ -1,10 +1,10 @@
-\documentclass{article}
+\documentclass[a4paper, 12pt]{article}
 
-\usepackage[a4paper]{geometry}
+\usepackage{geometry}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{lmodern}
-\usepackage[UKenglish]{babel} %[british, UKenglish, USenglish, english, american]
+\usepackage[danish]{babel} %[british, UKenglish, USenglish, english, american]
 
 \usepackage{amsmath}
 \usepackage{amssymb}
@@ -21,25 +21,9 @@
 \usepackage{lastpage}
 \usepackage{listings}
 
-\usepackage{tikz}
 
 \usepackage{enumitem}
-
-\usepackage{dsfont}
-\usepackage{wrapfig}
-\usepackage{caption}
-\usepackage{color}
-\usepackage{textcomp}
-\usepackage{mdframed}
-
-\usepackage{polynom}
-\usepackage{forest}
-\usepackage{qtree}
-\usepackage{graphics,graphicx}
-\usepackage{pstricks,pst-node,pst-tree}
-
 \numberwithin{equation}{section}
-
 \theoremstyle{plain}
 \newtheorem{saetning}{Sætning}[section]
 \newtheorem{lemma}[saetning]{Lemma}
@@ -51,13 +35,14 @@
 \newtheorem{eksempel}[saetning]{Eksempel}
 \newtheorem{notation}[saetning]{Notation}
 
+\newcommand{\N}{\mathbb{N}}
+
 
 %\setlength\parindent{0pt} % ingen indention ved linjeskift
-\linespread{1.5} % linjeafstand
 
-\lhead{Department of Computer Science and Mathematics}
+\lhead{UNF Odense Matematikklub}
 \chead{}
-\rhead{University of Southern Denmark}
+\rhead{Matematisk Induktion}
 \cfoot{\thepage\ of \pageref{LastPage}}
 
 
@@ -73,24 +58,71 @@
 \newpage
 
 \section{Hvad er induktion?}
-    Vi spørger Ordnet:
+Hvis vi skal arbejde med induktion, må vi først vide hvad det er. Vi spørger Ordnet:
     \begin{quote}
-        \textit{``fremkaldelse af elektrisk spænding i fx en ledning eller en spole ved ændring af det magnetfelt der omgiver denne''}
+        \textit{``fremkaldelse af elektrisk spænding i fx en ledning eller en spole ved ændring af det magnetfelt der omgiver denne.''}
     \end{quote}
-    det er måsek ikke helt rigtig, vi prøver den næste definition
+    Det er måske ikke helt rigtig, vi prøver den næste definition.
     \begin{quote}
-        \textit{``fremkaldelse eller stimulering af en ændring, reaktion el.lign. især vedr. biologiske eller biokemiske forhold''}
+        \textit{``fremkaldelse eller stimulering af en ændring, reaktion el.lign. især vedr. biologiske eller biokemiske forhold.''}
     \end{quote}
-    heller ikke helt rigtigt. Hvad med den sidste
+    Heller ikke helt det vi leder efter. Hvad med den sidste?
     \begin{quote}
-        \textit{``logisk tænkemåde hvor man ud fra enkelttilfælde slutter sig til en generel regel, en lovmæssighed eller en hypotese''}
+        \textit{``logisk tænkemåde hvor man ud fra enkelttilfælde slutter sig til en generel regel, en lovmæssighed eller en hypotese.''}
     \end{quote}
-    Det virker mere rigtigt. Dog lyder det her ikke helt for mig som matematiker. Jeg kan nemlig godt lide at være sten sikker på at min ``lovmæssighed'' eller ``hypotese'' er helt rigtig. Altså jeg tror generelt ikke på, at tilstrækkelig mange observationer er godt nok til at lave en generel regel. Lad mig komme med et eksempel
+    Det virker mere rigtigt. Dog lyder det her ikke helt for os som matematikere. Vi kan nemlig godt lide at være stensikre på at vores ``lovmæssighed'' eller ``hypotese'' er helt rigtig. Altså tror vi generelt ikke på, at tilstrækkelig mange observationer er godt nok til at lave en generel regel. Lad os kigge på et eksempel
     \begin{eksempel}[Russel]
-        Vi møder en kalkun d. 1. januar. Den lever på en amerikansk gård. Den første dag kommer bondemanden ind og giver kalkunen mad. Vi kan på nuværende tidspunkt ikke konkluderer noget. Det samme sker d. 2. januar; vi kan stadig ikke sige noget. Dette fortsætter helt ind til juli måned. Vi laver nu den logisk induktive slutning: ``hver dag kommer bondemanden og giver kalkunen mad''. Dette fortsætter ganske vist gennem juli, august, september, oktober og helt end til d. 4. torsdag i november, hvor bondemanden kommer og knækker narken på kalkunen.
+        Vi møder en kalkun d. 1. Januar. Den lever på en amerikansk gård. Den første dag kommer bondemanden ind og giver kalkunen mad. Vi kan på nuværende tidspunkt ikke konkludere noget. Det samme sker d. 2. Januar; vi kan stadig ikke sige noget. Dette fortsætter helt ind til juli måned. Vi laver nu den logisk induktive slutning: ``hver dag kommer bondemanden og giver kalkunen mad''. Dette fortsætter ganske vist gennem juli, august, september, oktober og helt end til d. 4. Torsdag i November, hvor bondemanden kommer og knækker narken på kalkunen.
     \end{eksempel}
-    Konklusion logisk induktion er ikke godt nok til matematik, dog ville det være rimelig nice, hvis vi kunne benytte ideen af at flere observationer kan føre til en generel regel.
+    Vi må konkludere logisk induktion er ikke godt nok til matematik, dog ville det være rimelig nice, hvis vi kunne benytte ideen af at flere observationer kan føre til en generel regel.
     
+\section{Lidt om de naturlige tal}
+Vi vil nu udvikle vores ``egen'' induktion, som vi ønsker at kunne bruge til at bevise matematiske sætninger. Vi vil kalde vores spritnye induktion for ``matematisk induktion'', og hvis vi ønsker at kunne lave beviser med den, må den altså være en del mere stærk end hvad vi oplevede i sidste sektion.
+
+Vi starter med at indføre en særlig mængde, som spiller en vigtig rolle for induktionen.
+\begin{definition}[Naturlige tal]
+  De \emph{naturlige tal}, skrevet \(\N\), er mængden af alle positive heltal. Altså,
+  \[
+    \N:=\{1,2,3,\ldots\}.
+  \]
+  Desuden definerer vi \(\N_0\) som de naturlige tal \emph{inklusiv 0} eller de \emph{positive heltal}, altså
+  \[
+    \N_0:=\{0,1,2,\ldots\}.
+    \]
+\end{definition}
+Som matematikere kan vi godt lide at have meget konkrete og præcise definitioner, og hvis du viste ovenstående definition til den almægtige Gau{\ss}, ville han sandsynligvis fordømme de næste 10 generationer i din familie til et liv uden matematik. Der findes forskellige måder at definere de positive heltal på, bl.a. med mængdelære, men det er ikke dagens mål. Vores ``definition'' er nok til at forstå matematisk induktion, hvilket til gengæld er dagens mål.
+
+Vores matematiske induktion kommer til at gøre brug af to grundlæggende fakta om de positive heltal tal, som vi her vil tage for givet. Det første princip er at hvis vi har et  tal \(n\in\N_0\), så er der et entydigt ``næste tal.'' På samme måde har \(n\) også et entydigt ``forrige tal,'' altså hvis \(n\neq 0\).
+
+Hvis vi skriver \(S(n)\) for ``tallet efter \(n\)'', så har vi særligt at ethvert tal \(m\in\N_0\) er på formen
+\[
+  \underbrace{S(S(\ldots S}_{m\text{ gange}}(0)))),
+\]
+hvilket vil sige at vi kan nå til ethvert positivt heltal ved at starte ved 0 og så gå videre til det næste tal nok gange.
+
+Det andet princip vi vil bruge er \emph{velordningsprincippet}
+\begin{proposition}[Velordningsprincippet]
+  Enhver delmængde \(M\subseteq \N_0\) har et \emph{mindste element}, altså et element \(m\in M\) således at \(m\le k\) for alle \(k\in M\).
+\end{proposition}
+Hvis \(m:=\min(M)\) er det mindste element i \(M\subseteq \N_0\), og vi desuden har \(k\in M\), så er
+\[
+  k=\underbrace{S(S(\ldots S}_{k\text{ gange}}(0)))=\underbrace{S(S(\ldots S}_{k-m\text{ gange}}(m))),
+  \]
+  og altså kan vi ``ramme'' alle \(k\in M\) ved at starte fra \(m\) og gå videre til det næste tal i rækkefølgen et tilstrækkeligt antal gange. Hvis man grubler længe nok over disse observationer kan man måske komme frem til en nyttig måde at anvende dem på til at bevise matematiske sætninger om \(\N\) og \(\N_0\); vi er endelig klar til at sætte de matematiske magneter i gang.
 \section{Matematisk induktion}
-    Vi vil derfor gerne udvikle vores ``egen induktion''. Lad os kalde det ``matematisk induktion''.
+Nu er den her endelig! Bevismetoden vi alle har ventet på! \emph{INDUKTION!!!}. Vi introducerer metoden med et eksempel. Vi vil gerne vise at 
+\[
+  2m<m^2
+\]
+gælder for alle positive heltal \(m\ge 3\). Vi kan jo starte med at tjekke at udsagnet holder for \(m=3\) -- hvis det ikke gør, har vi i hvert fald intet håb om at udsagnet kan være sandt. For \(m=3\) har vi
+\[
+  2m=6,\ m^2=9.
+  \]
+  Altså er udsagnet sandt for \(m=3\), da \(6<9\). Ved at verficere at det holder for \(m=3\) har vi allerede orndet første trin i induktionsbeviset. Dette trin kaldes \emph{induktionsbasis.}
+
+  Vi kunne fortsætte med at bevise udsagnet for \(m=4,5,6,\ldots\), men så ville vi aldrig blive færdige -- og vi vil jo gerne også have tid til at lave andre induktionsbeviser, så det går ikke. Vi må altså finde på en anden fremgang.
+
+  Lad os i stedet nu antage at udsagnet er sandt for et eller andet \(m\ge 3\) -- vi laver ikke nogen antagelser om hvad \(m\) er, andet end at det er større end 3. Dette kaldes \emph{induktionshypotesen}.
+
+  Vi er nu næsten færdige -- vi mangler kun \emph{induktionsskridtet}, som klart er den vigtigste del af processen.
 \end{document}
