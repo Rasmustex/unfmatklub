@@ -97,7 +97,7 @@ Vores matematiske induktion kommer til at gøre brug af to grundlæggende fakta 
 
 Hvis vi skriver \(S(n)\) for ``tallet efter \(n\)'', så har vi særligt at ethvert tal \(m\in\N_0\) er på formen
 \[
-  \underbrace{S(S(\ldots S}_{m\text{ gange}}(0)))),
+  \underbrace{S(S(\ldots S}_{m\text{ gange}}(0)\ldots)),
 \]
 hvilket vil sige at vi kan nå til ethvert positivt heltal ved at starte ved 0 og så gå videre til det næste tal nok gange. Det gør 0 til et slags ``basistal'' for \(\N_0\).
 
@@ -107,7 +107,7 @@ Det andet princip vi vil bruge er \emph{velordningsprincippet}
 \end{proposition}
 Hvis \(m\) er det mindste element i \(M\subseteq \N_0\), og vi desuden har \(k\in M\), så er
 \[
-  k=\underbrace{S(S(\ldots S}_{k\text{ gange}}(0)))=\underbrace{S(S(\ldots S}_{k-m\text{ gange}}(m))),
+  k=\underbrace{S(S(\ldots S}_{k\text{ gange}}(0)\ldots ))=\underbrace{S(S(\ldots S}_{k-m\text{ gange}}(m)\ldots )),
   \]
   og altså kan vi ``ramme'' alle \(k\in M\) ved at starte fra \(m\) og gå videre til det næste tal i rækkefølgen et tilstrækkeligt antal gange, så \(m\) er altså det nye ``basistal'' i vores nye mængde \(M\), og erstatter 0's rolle. Hvis man grubler længe nok over disse observationer kan man måske komme frem til en nyttig måde at anvende dem på til at bevise matematiske sætninger om \(\N\) og \(\N_0\); vi er endelig klar til at sætte de matematiske magneter i gang.
 \section{Matematisk induktion}
@@ -136,7 +136,7 @@ gælder for alle ikke-negative heltal \(m\ge 3\). Vi kan jo starte med at tjekke
     \end{enumerate}
     Vi påstår at vi nu har vist at \(2m<m^2\) for alle naturlige tal \(m\ge 3\), fordi hvis \(m\ge 3\), så er
     \[
-      m=\underbrace{S(S(\ldots S}_{m-3\text{ gange}}(3)))=3+\underbrace{1+1+\ldots+1}_{m-3}.
+      m=\underbrace{S(S(\ldots S}_{m-3\text{ gange}}(3)\ldots))=3+\underbrace{1+1+\ldots+1}_{m-3}.
       \]
       Men da udsagnet gælder for 3, må det gælde for \(3+1\) pr. induktionsskridtet, og dermed også \((3+1)+1\), et cetera, og vi kan fortsætte den kæde hele vejen op til \(m\), uanset hvor stor \(m\) er. Vi benytter os af, at der er et ``basistal,'' som udsagnet skal gælde for, og så udnytter vi at vi bare kan udtrykke alle andre tal som masser af iterationer af \(S\) anvendt på dette basistal.
 
