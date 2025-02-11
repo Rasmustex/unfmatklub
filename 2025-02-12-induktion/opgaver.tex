@@ -1,0 +1,147 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage[danish]{babel} % Automatisk oversættelse af diverse indbyggede LaTeX-ting
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc} % Bedre font-encoding. Gør at LaTeX er nice mht encoding af umlaut og andre accenter
+\usepackage{lmodern}     % Font som understøtter T1
+\usepackage{amssymb} % Gode gamle matematiksymboler
+\usepackage{amsthm} % Til sætninger osv
+\theoremstyle{plain}
+\newtheorem{saetning}{Sætning}[section]
+
+\newcommand{\N}{\mathbb{N}}
+
+%%% Pakke som definerer exercise environments og kode som oversætter dem til dansk.
+\usepackage{exercise}
+\renewcommand{\ExerciseName}{Opgave}
+\renewcommand{\ExerciseListName}{Opg.}
+\renewcommand{\AnswerName}{Svar}
+\renewcommand{\AnswerListName}{Svar}
+\renewcommand{\ExePartName}{Del}
+%%%
+
+\usepackage{geometry} % Marginalt mindre margener
+%%% Pakker til sidefod og sidehoved samt specificering af disse
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\usepackage{lastpage} % giver os en lastpage counter
+
+\lhead{UNF Odense Matematikklub}
+\chead{}
+\rhead{Matematisk Induktion}
+\cfoot{\thepage\ af \pageref{LastPage}}
+\title{UNF Odense Matematikklub: Induktion\\
+\Large{Opgaver}}
+\author{}
+\date{}
+\begin{document}
+\maketitle
+\thispagestyle{empty}
+\newpage
+\setcounter{page}{1}
+\begin{Exercise}[label={ex:1}]
+  Lad \(P(n)\) være udtrykket
+  \[
+    1^2+2^2+\dots+n^2=\frac{n(n+1)(2n+1)}{6}
+    \]
+    om naturlige tal \(n\). Vi vil prøve at vise at \(P(n)\) er sandt for alle \(n\in\N\) ved induktion.
+    \Question Hvad er udsagnet \(P(1)\)? Vis at udsagnet er sandt. Dette udgør basisskridtet i beviset.
+    \Question Hvad er induktionshypotesen for induktionsbeviset?
+    \Question Udfør induktionsskridtet for beviset.
+    \Question Konkluder at \(P(n)\) gælder for alle \(n\in\N\) og forklar hvorfor.
+\end{Exercise}
+\begin{Exercise}
+ Lad \(P(n)\) være udtrykket
+  \[
+    1^2+3^2+5^2+\dots+(2n+1)^2=\frac{(n+1)(2n+1)(2n+3)}{3},
+    \]
+    hvor \(n\in\N_0\). Vi vil vise at \(P(n)\) er sandt for all \(n\in\N_0\) ved induktion.
+    \Question Hvad er udsagnet \(P(1)\)? Vis at udsagnet er sandt. Dette udgør basisskridtet i beviset.
+    \Question Hvad er induktionshypotesen for induktionsbeviset?
+    \Question Udfør induktionsskridtet for beviset.
+    \Question Konkluder at \(P(n)\) gælder for alle \(n\in\N_0\) og forklar hvorfor.
+\end{Exercise}
+\begin{Exercise}
+  Find fejlen i følgende ``bevis.''
+  \begin{saetning}
+    Lad \(n\in\N\). Alle pingviner i en samling af \(n\) pingviner har altid samme højde.
+  \end{saetning}
+  \begin{proof}[``Bevis'']
+    Vi viser sætningen ved induktion.
+    \begin{description}
+    \item[Induktionsbasis (\(n=1\)):] Trivielt.
+    \item[Induktionshypotese:] Lad \(n\ge 1\) være et heltal, og antag at alle pingviner i enhver samling af \(n\) pingviner har samme farve.
+    \item[Induktionsskridt:] Antag at vi har en samling af \(n+1\) pingviner. Kald pingvinerne \(h_1,h_2,\dots,h_{n+1}\). Samlingen
+      \[
+        \{h_1,h_2,\ldots,h_n\}
+      \]
+        indeholder n pingviner, og derfor må alle pingviner i samlingen have samme farve. Ligeledes med samlingen
+      \[
+          \{h_2,h_3,\ldots,h_{n+1}\}.
+      \]
+      Der er et overlap mellem de to samlinger af pingviner, og altså må alle pingvinerne i vores samling af \(n+1\) pingviner have samme farve.
+    \end{description}
+  \end{proof}
+\end{Exercise}
+\begin{Exercise}
+For alle \(n\in\N\) definerer vi \(n!\) (udtales \(n\) fakultet) som tallet
+\[
+    1\cdot 2\cdot\dots\cdot n.
+\]
+Bemærk at \(1!=1\), \(2!=2\), \(3!=6\), etc. Brug induktion til at bevise at
+\[
+    1\cdot 1!+2\cdot 2!+\dots+n\cdot n!=(n+1)!-1
+\]
+For alle \(n\in\N\).
+\end{Exercise}
+\begin{Exercise}
+  I følgende opgave er \(n>1\) et naturligt tal: Emil Stabil kan hverken fryses eller brændes, idet han samtidigt består af henholdsvis is og ild. Videnskabsmænd har beregnet at hvis bare du kan levere \( 2-\frac{1}{n}\ \mathrm{J}\) varmeenergi, så kan han dog alligevel måske brændes. Du ved at du maksimalt kan levere
+  \[
+    1+\frac{1}{2^2}+\frac{1}{3^2}+\dots+\frac{1}{n^2}\ \mathrm{J}
+  \]
+  varmeenergi til Emil Stabil med dit induktionskomfur.
+
+  Kan komfuret levere nok varmeenergi til Emil Stabil til at brænde ham? Bevis din konklusion ved induktion. (Hint: Han er Emil Stabil, og du kan derfor nok ikke brænde ham.) 
+\end{Exercise}
+\begin{Exercise}
+  Find fejlen i følgende ``bevis.'' 
+\begin{saetning}
+  Lad \(n\in\N\). Hvis \(x,y\in\N\) og \(\max(x,y)=n\), så er \(x=y\).
+\end{saetning}
+\begin{proof}[``Bevis'']
+  Vi beviser sætningen ved induktion.
+  \begin{description}
+    \item[Induktionsbasis (\(n=1\)):] Hvis \(\max(x,y)=1\) og \(x,y\in\N\), så er \(x=y=1\), da 1 er det mindste naturlige tal og både \(x\) og \(y\) er mindre end eller lig 1.
+    \item[Induktionshypotese:] Lad \(n\ge 1\), og antag at hvis \(x,y\in\N\) er sådan at \(\max(x,y)=n\), så er \(x=y\).
+    \item[Induktionsskridt:] Lad \(x,y\in\N\) sådan at \(\max(x,y)=n+1\). Så er \(\max(x-1,y-1)=n\), sådan at \(x-1=y-1\). Altså er \(x=y\), og induktionsskridtet er fuldført.
+  \end{description}
+\end{proof}
+ (Hint: Hvad sker der når \(n=2\)?)
+\end{Exercise}
+\begin{Exercise}[label={ex:6}]
+  \Question Find på en formel for
+  \[
+    \frac{1}{1\cdot 2}+\frac{1}{2\cdot 3}+\dots+\frac{1}{n(n+1)},
+  \]
+  ved at beregne udtrykket for små \(n\) og spotte et mønster
+  \Question Bevis at din formel holder for alle \(n\in\N\) ved induktion.
+\end{Exercise}
+\begin{Exercise}
+  Lav opgave \ref{ex:6}, men find i stedet en formel for
+  \[
+    \frac{1}{2}+\frac{1}{4}+\frac{1}{8}+\dots+\frac{1}{2^n}.
+  \]
+\end{Exercise}
+\begin{Exercise}
+  Vis at
+  \[
+    1^2-2^2+3^2-\dots+(-1)^{n-1}n^{2}=(-1)^{n-1}\frac{n(n+1)}{2}
+  \]
+  for alle \(n\in\N\).
+\end{Exercise}
+\begin{Exercise}
+  Lad \(n>1\) være et heltal. Brug induktion til at vise at hvis Emil Stabil kræver \(n^n\ \mathrm{J}\) varmeenergitilførsel for at blive brændt, så kan du fortsat ikke brænde ham hvis du maksimalt kan levere \(n!\ \mathrm{J}\).
+\end{Exercise}
+\begin{Exercise}
+  Lad \(n>6\) være et heltal. Videnskabsmændende har endelig fundet ud af at du helt sikkert kan fryse Emil Stabil hvis du kan frarøve ham \(3^n\ \mathrm{J}\) varmeenergi. Du ved at du kan snyde ham for \(n!\) varmeenergi. Vis at du kan fryse Emil Stabil.
+\end{Exercise}
+\end{document}
