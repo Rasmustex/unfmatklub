@@ -62,22 +62,21 @@
 \section{Hvad er induktion?}
 Hvis vi skal arbejde med induktion, må vi først vide hvad det er. Vi spørger Ordnet:
     \begin{quote}
-        \textit{``fremkaldelse af elektrisk spænding i fx en ledning eller en spole ved ændring af det magnetfelt der omgiver denne.''}
+        \textit{``Fremkaldelse af elektrisk spænding i fx en ledning eller en spole ved ændring af det magnetfelt der omgiver denne.''}
     \end{quote}
     Det er måske ikke helt rigtig, vi prøver den næste definition.
     \begin{quote}
-        \textit{``fremkaldelse eller stimulering af en ændring, reaktion el.lign. især vedr. biologiske eller biokemiske forhold.''}
+        \textit{``Fremkaldelse eller stimulering af en ændring, reaktion el.lign. især vedr. biologiske eller biokemiske forhold.''}
     \end{quote}
     Heller ikke helt det vi leder efter. Hvad med den sidste?
     \begin{quote}
-        \textit{``logisk tænkemåde hvor man ud fra enkelttilfælde slutter sig til en generel regel, en lovmæssighed eller en hypotese.''}
+        \textit{``Logisk tænkemåde hvor man ud fra enkelttilfælde slutter sig til en generel regel, en lovmæssighed eller en hypotese.''}
     \end{quote}
-    Det virker mere rigtigt. Dog fungerer det her ikke helt for os som matematikere. Vi kan nemlig godt lide at være stensikre på at vores ``lovmæssighed'' eller ``hypotese'' er helt rigtig. Altså tror vi generelt ikke på, at tilstrækkelig mange observationer er godt nok til at lave en generel regel. Lad os kigge på et eksempel
+    Det virker mere rigtigt. Dog fungerer det her ikke helt for os som matematikere. Vi kan nemlig godt lide at være stensikre på at vores ``lovmæssighed'' eller ``hypotese'' er helt rigtig. Altså tror vi generelt ikke på, at tilstrækkelig mange observationer er godt nok til at lave en generel regel. Lad os kigge på et eksempel.
     \begin{eksempel}[Russel]
-        Vi møder en kalkun d. 1. januar. Den lever på en amerikansk gård. Den første dag kommer bondemanden ind og giver kalkunen mad. Vi kan på nuværende tidspunkt ikke konkludere noget. Det samme sker d. 2. januar; vi kan stadig ikke sige noget. Dette fortsætter helt indtil juli måned. Vi laver nu den logisk induktive slutning: ``hver dag kommer bondemanden og giver kalkunen mad''. Dette fortsætter ganske vist gennem juli, august, september, oktober og helt indtil d. 4. torsdag i november, hvor bondemanden kommer og knækker narken på kalkunen.
+        Vi møder en kalkun d. 1. januar. Den lever på en amerikansk gård. Den første dag kommer bondemanden ind og giver kalkunen mad. Vi kan på nuværende tidspunkt ikke konkludere noget. Det samme sker d. 2. januar; vi kan stadig ikke sige noget. Dette fortsætter helt indtil juli måned. Vi laver nu den logisk induktive slutning: ``hver dag kommer bondemanden og giver kalkunen mad''. Dette fortsætter ganske vist gennem juli, august, september, oktober og helt indtil d. 4. torsdag i november, hvor bondemanden kommer og knækker nakken på kalkunen.
     \end{eksempel}
-    Vi må konkludere, at logisk induktion ikke er godt nok til matematik, dog ville det være rimelig nice, hvis vi kunne benytte ideen af at flere observationer kan føre til en generel regel.
-    
+    Vi må konkludere, at logisk induktion ikke er godt nok til matematik. Dog ville det være rimelig nice, hvis vi kunne benytte ideen af at flere observationer kan føre til en generel regel til at bevise noget matematik.
 \section{Lidt om de naturlige tal}
 Vi vil nu udvikle vores ``egen'' induktion, som vi ønsker at kunne bruge til at bevise matematiske sætninger. Vi vil kalde vores spritnye induktion for ``matematisk induktion'', og hvis vi ønsker at kunne lave beviser med den, må den altså være en del mere stærk end hvad vi oplevede i sidste sektion.
 
@@ -100,23 +99,23 @@ Hvis vi skriver \(S(n)\) for ``tallet efter \(n\)'', så har vi særligt at ethv
 \[
   \underbrace{S(S(\ldots S}_{m\text{ gange}}(0)))),
 \]
-hvilket vil sige at vi kan nå til ethvert positivt heltal ved at starte ved 0 og så gå videre til det næste tal nok gange.
+hvilket vil sige at vi kan nå til ethvert positivt heltal ved at starte ved 0 og så gå videre til det næste tal nok gange. Det gør 0 til et slags ``basistal'' for \(\N_0\).
 
 Det andet princip vi vil bruge er \emph{velordningsprincippet}
 \begin{proposition}[Velordningsprincippet]
   Enhver delmængde \(M\subseteq \N_0\) har et \emph{mindste element}, altså et element \(m\in M\) således at \(m\le k\) for alle \(k\in M\).
 \end{proposition}
-Hvis \(m:=\min(M)\) er det mindste element i \(M\subseteq \N_0\), og vi desuden har \(k\in M\), så er
+Hvis \(m\) er det mindste element i \(M\subseteq \N_0\), og vi desuden har \(k\in M\), så er
 \[
   k=\underbrace{S(S(\ldots S}_{k\text{ gange}}(0)))=\underbrace{S(S(\ldots S}_{k-m\text{ gange}}(m))),
   \]
-  og altså kan vi ``ramme'' alle \(k\in M\) ved at starte fra \(m\) og gå videre til det næste tal i rækkefølgen et tilstrækkeligt antal gange. Hvis man grubler længe nok over disse observationer kan man måske komme frem til en nyttig måde at anvende dem på til at bevise matematiske sætninger om \(\N\) og \(\N_0\); vi er endelig klar til at sætte de matematiske magneter i gang.
+  og altså kan vi ``ramme'' alle \(k\in M\) ved at starte fra \(m\) og gå videre til det næste tal i rækkefølgen et tilstrækkeligt antal gange, så \(m\) er altså det nye ``basistal'' i vores nye mængde \(M\), og erstatter 0's rolle. Hvis man grubler længe nok over disse observationer kan man måske komme frem til en nyttig måde at anvende dem på til at bevise matematiske sætninger om \(\N\) og \(\N_0\); vi er endelig klar til at sætte de matematiske magneter i gang.
 \section{Matematisk induktion}
 Nu er den her endelig! Bevismetoden vi alle har ventet på! \emph{INDUKTION!!!}. Vi introducerer metoden med et eksempel. Vi vil gerne vise at 
 \[
   2m<m^2
 \]
-gælder for alle ikke-negative heltal \(m\ge 3\). Vi kan jo starte med at tjekke at udsagnet holder for \(m=3\) -- hvis det ikke gør, har vi i hvert fald intet håb om at udsagnet kan være sandt. For \(m=3\) har vi
+gælder for alle ikke-negative heltal \(m\ge 3\). Vi kan jo starte med at tjekke at udsagnet holder for \(m=3\). 3 er her er vores ``basistal'' for mængden \(M\) af naturlige tal større end eller lig 3. Hvis ikke vi kan vise uligheden for \(m=3\) har vi desuden i hvert fald intet håb om at udsagnet kan være sandt for alle \(m\ge 3\). For \(m=3\) har vi
 \[
   2m=6,\ m^2=9.
   \]
@@ -130,7 +129,7 @@ gælder for alle ikke-negative heltal \(m\ge 3\). Vi kan jo starte med at tjekke
   \[
     2(m+1)=2m+2\buildrel{2m<m^2}\over{<}m^2+2=(m+1)^2+1-2m\buildrel{2m\ge 6>1}\over <(m+1)^2.
     \]
-    Bemærk at vi her i den første ulighed har brugt induktionshypotesen, \(2m<m^2\) samt at vi har antaget at \(m\ge 3\). Vi har nu vist at
+    Bemærk at vi her i den første ulighed har brugt induktionshypotesen, \(2m<m^2\) samt at vi har brugt at \(m\ge 3\). Vi har nu vist at
     \begin{enumerate}
     \item \(2m<m^2\) når \(m=3\);
       \item Hvis \(2m<m^2\) for et \(m\ge 3\), så er \(2(m+1)<(m+1)^2\).
@@ -139,16 +138,16 @@ gælder for alle ikke-negative heltal \(m\ge 3\). Vi kan jo starte med at tjekke
     \[
       m=\underbrace{S(S(\ldots S}_{m-3\text{ gange}}(3)))=3+\underbrace{1+1+\ldots+1}_{m-3}.
       \]
-      Men da udsagnet gælder for 3, må det gælde for \(3+1\) pr. induktionsskridtet, og dermed også \((3+1)+1\), et cetera, og vi kan fortsætte den kæde hele vejen op til \(m\), uanset hvor stor \(m\) er. Vi benytter os af, at der er et ``mindste tal,'' som udsagnet skal gælde for, og så udnytter vi at vi bare kan udtrykke alle andre tal som masser af iterationer af \(S\) anvendt på dette mindste tal.
+      Men da udsagnet gælder for 3, må det gælde for \(3+1\) pr. induktionsskridtet, og dermed også \((3+1)+1\), et cetera, og vi kan fortsætte den kæde hele vejen op til \(m\), uanset hvor stor \(m\) er. Vi benytter os af, at der er et ``basistal,'' som udsagnet skal gælde for, og så udnytter vi at vi bare kan udtrykke alle andre tal som masser af iterationer af \(S\) anvendt på dette basistal.
 
-      Det kan sammenlignes med at klatre op af en stige: Hvis vi tager det første skridt op, og hvis det at vi tager et skridt op af stigen medfører at vi tager et skridt til, så når vi et hvilket som helst trin på stigen på et eller andet tidspunkt.
+      Det kan sammenlignes med at klatre op ad en stige: Hvis vi tager det første skridt op, og hvis det at vi tager et skridt op af stigen medfører at vi tager et skridt til, så når vi et hvilket som helst trin på stigen på et eller andet tidspunkt.
 
       Vi kan tage proceduren ovenfor og generalisere den til en metode til at bevise udsagn om vilkårlige delmængder af naturlige tal.
 \begin{definition}[Matematisk induktion]
   Lad \(m\in\N_0\). Lad desuden \(P(n)\) være et logisk udsagn, som afhænger af et enkelt ikke-negativt heltal. At bruge \emph{matematisk induktion} til at vise at \(P(n)\) gælder for alle \(n\in\N_0\) med \(n\ge m\) består af følgende procedure:
   \begin{description}
   \item[Induktionsbasis:] Vis at \(P(m)\) holder.
-  \item[Induktionshypotese:] Antag at \(P(n)\) holder for et eller andet \(n\in N_0\) med \(n\ge m\).
+  \item[Induktionshypotese:] Antag at \(P(n)\) holder for et eller andet \(n\in \N_0\) med \(n\ge m\).
     \item[Induktionsskridt:] Brug induktionshypotesen (samt evt. at vi ved at \(n\ge m\) i hypotesen) til at vise at \(P(n+1)\) er sandt.
   \end{description}
 \end{definition}
@@ -156,9 +155,11 @@ Når man har udført de tre skridt i induktion, så har man vist \(P(n)\) for al
 \[
   n=m+\underbrace{1+1+\ldots+1}_{n-m\text{ gange}}.
 \]
-Men fordi \(P(m)\) er sandt er \(P(m+1)\) også sandt på grund af induktionsskridtet, og så falder dominobrikkerne, fordi vi så kan bruge induktionsskridtet på \(m+1\) for at få at \(P(m+2)\) er sandt, og så videre.
+Men fordi \(P(m)\) er sandt er \(P(m+1)\) også sandt på grund af induktionsskridtet, og så falder dominobrikkerne, fordi vi så kan bruge induktionsskridtet på \(m+1\) for at få at \(P(m+2)\) er sandt, og så videre. Bevismetoden beror altså på at vi kun skal ``gå tilbage'' endeligt mange gange fra et vilkårligt tal \(n\ge m\) for at nå basistallet i \(M\).
+
+Vi kan selvfølgelig også bruge induktion til at vise at noget holder for en delmængde \(M\) af \(\N_0\) som ikke bare består af alle tal større end et eller andet tal \(m\in\N_0\). Det er bare lidt overkill, for hvis der er ``huller'' mellem tallene i \(M\), så ender vi med at bevise vores udsagn for flere tal end bare dem i \(M\). Det samme sker hvis \(M\) ikke er en endelig mængde. Magten i induktion er at vi kan vise noget om den uendelige mængde \(\N_0\) ved at tage uendeligt mange skridt, men uden at sidde og bruge uendeligt lang tid på at lave beviset.
 \section{Et eksempel}
-Vi slutter af med endnu et eksempel på induktion, hvor vi bruger det til at bevise en relativt velkendt og rimelig nyttig sætning.
+Vi slutter af med endnu et eksempel på induktion, hvor vi bruger teknikken til at bevise en relativt velkendt og rimelig nyttig sætning.
 \begin{saetning}
   Lad \(n\in\N\). Det gælder at
   \begin{equation}\label{eq:sumn}
@@ -167,7 +168,7 @@ Vi slutter af med endnu et eksempel på induktion, hvor vi bruger det til at bev
   Med venstresiden af ligheden menes summen af de første \(n\) heltal startende fra 1.
 \end{saetning}
 \begin{proof}[Bevis]
-Bemærk at \(\N\) bare er mængden af ikke-negative heltal som er større end 0, så det er tilstrækkeligt at vise at \cref{eq:sumn} gælder for alle \(n\in\N_0\) med \(n\ge 1\) ved induktion, så det gør vi.
+Bemærk at \(\N\subseteq\N_0\) bare er mængden af ikke-negative heltal som er større end 0, så det er tilstrækkeligt at vise at \cref{eq:sumn} gælder for alle \(n\in\N_0\) med \(n\ge 1\) ved induktion, så det gør vi.
 \begin{description}
 \item[Induktionsbasis:] Hvis vi betragter \(n=1\), så får vi
   \[
@@ -181,8 +182,8 @@ Bemærk at \(\N\) bare er mængden af ikke-negative heltal som er større end 0,
       \]
     Vi kan nu sætte de to udtryk i den nye sum på fælles nævner, så vi får
     \begin{align*}
-      1+2+\dots+(n+1)&=\frac{n(n+1)+2(n+1)}{2}=\frac{n^2+n+2n+2}{2}\\
-      &=\frac{(n+1)\cdot n+(n+1)\cdot 2}{2}=\frac{(n+1)(n+2)}{2}.
+      1+2+\dots+(n+1)&=\frac{n(n+1)+2(n+1)}{2}\\
+      &=\frac{(n+2)(n+1)}{2}=\frac{(n+1)(n+2)}{2}.
     \end{align*}
     Det er jo præcis det udtryk vi gerne ville have, så vi har nu gennemført induktionsskridtet.
 \end{description}
