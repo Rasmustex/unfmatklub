@@ -17,6 +17,7 @@
 \usepackage{graphicx}
 \usepackage{float}
 \usepackage[hidelinks]{hyperref}
+\usepackage{cleveref}
 
 \usepackage{lastpage}
 \usepackage{listings}
@@ -35,6 +36,7 @@
 \newtheorem{eksempel}[saetning]{Eksempel}
 \newtheorem{notation}[saetning]{Notation}
 
+\crefname{equation}{ligning}{ligninger}
 \newcommand{\N}{\mathbb{N}}
 
 
@@ -92,7 +94,7 @@ Vi starter med at indføre en særlig mængde, som spiller en vigtig rolle for i
 \end{definition}
 Som matematikere kan vi godt lide at have meget konkrete og præcise definitioner, og hvis du viste ovenstående definition til den almægtige Gau{\ss}, ville han sandsynligvis fordømme de næste 10 generationer i din familie til et liv uden matematik. Der findes forskellige måder at definere de ikke-negative heltal på, bl.a. med mængdelære, men det er ikke dagens mål. Vores ``definition'' er nok til at forstå matematisk induktion, hvilket til gengæld er dagens mål.
 
-Vores matematiske induktion kommer til at gøre brug af to grundlæggende fakta om de ikke-negative heltal tal, som vi her vil tage for givet. Det første princip er at hvis vi har et  tal \(n\in\N_0\), så er der et entydigt ``næste tal,'' netop \(n+1\). På samme måde har \(n\) også et entydigt ``forrige tal,'' altså hvis \(n\neq 0\).
+Vores matematiske induktion kommer til at gøre brug af to grundlæggende fakta om de ikke-negative heltal, som vi her vil tage for givet. Det første princip er at hvis vi har et  tal \(n\in\N_0\), så er der et entydigt ``næste tal,'' netop \(n+1\). På samme måde har \(n\) også et entydigt ``forrige tal,'' altså hvis \(n\neq 0\).
 
 Hvis vi skriver \(S(n)\) for ``tallet efter \(n\)'', så har vi særligt at ethvert tal \(m\in\N_0\) er på formen
 \[
@@ -122,7 +124,7 @@ gælder for alle ikke-negative heltal \(m\ge 3\). Vi kan jo starte med at tjekke
 
   Vi kunne fortsætte med at bevise udsagnet for \(m=4,5,6,\ldots\), men så ville vi aldrig blive færdige -- og vi vil jo gerne også have tid til at lave andre induktionsbeviser, så det går ikke. Vi må altså finde på en anden fremgang.
 
-  Lad os i stedet nu antage at udsagnet er sandt for et eller andet \(m\ge 3\) -- vi laver ikke nogen antagelser om hvad \(m\) er, andet end at det er større end 3. Dette kaldes \emph{induktionshypotesen}.
+  Lad os i stedet nu antage at udsagnet er sandt for et eller andet \(m\ge 3\) -- vi laver ikke nogen antagelser om hvad \(m\) er, andet end at det er større end eller lig 3. Dette kaldes \emph{induktionshypotesen}.
 
   Vi er nu næsten færdige -- vi mangler kun \emph{induktionsskridtet}. Når vi nu har antaget at udsagnet holder for \(m\), så vil vi vise at det holder for \(m+1\). Så lad os kigge på det
   \[
@@ -141,6 +143,50 @@ gælder for alle ikke-negative heltal \(m\ge 3\). Vi kan jo starte med at tjekke
 
       Det kan sammenlignes med at klatre op af en stige: Hvis vi tager det første skridt op, og hvis det at vi tager et skridt op af stigen medfører at vi tager et skridt til, så når vi et hvilket som helst trin på stigen på et eller andet tidspunkt.
 
-Vi kan tage proceduren ovenfor og generalisere den til udtryk om vilkårlige delmængder af 
-
+      Vi kan tage proceduren ovenfor og generalisere den til en metode til at bevise udsagn om vilkårlige delmængder af naturlige tal.
+\begin{definition}[Matematisk induktion]
+  Lad \(m\in\N_0\). Lad desuden \(P(n)\) være et logisk udsagn, som afhænger af et enkelt ikke-negativt heltal. At bruge \emph{matematisk induktion} til at vise at \(P(n)\) gælder for alle \(n\in\N_0\) med \(n\ge m\) består af følgende procedure:
+  \begin{description}
+  \item[Induktionsbasis:] Vis at \(P(m)\) holder.
+  \item[Induktionshypotese:] Antag at \(P(n)\) holder for et eller andet \(n\in N_0\) med \(n\ge m\).
+    \item[Induktionsskridt:] Brug induktionshypotesen (samt evt. at vi ved at \(n\ge m\) i hypotesen) til at vise at \(P(n+1)\) er sandt.
+  \end{description}
+\end{definition}
+Når man har udført de tre skridt i induktion, så har man vist \(P(n)\) for alle \(n\ge m\). Vi kan godt se os frem til hvorfor det virker: Lad \(M\subseteq \N_0\) være mængden af alle ikke-negative heltal \(n\), som er større end eller lig med \(m\). Det er tydeligt at \(m\) er det mindste element i \(M\), og vi har vist at \(P(m)\) er sandt. Som vi argumenterede for i vores tidligere eksempel har vi for alle \(n\in M\) at
+\[
+  n=m+\underbrace{1+1+\ldots+1}_{n-m\text{ gange}}.
+\]
+Men fordi \(P(m)\) er sandt er \(P(m+1)\) også sandt på grund af induktionsskridtet, og så falder dominobrikkerne, fordi vi så kan bruge induktionsskridtet på \(m+1\) for at få at \(P(m+2)\) er sandt, og så videre.
+\section{Et eksempel}
+Vi slutter af med endnu et eksempel på induktion, hvor vi bruger det til at bevise en relativt velkendt og rimelig nyttig sætning.
+\begin{saetning}
+  Lad \(n\in\N\). Det gælder at
+  \begin{equation}\label{eq:sumn}
+    1+2+3+\dots+n=\frac{n(n+1)}{2}.
+  \end{equation}
+  Med venstresiden af ligheden menes summen af de første \(n\) heltal startende fra 1.
+\end{saetning}
+\begin{proof}[Bevis]
+Bemærk at \(\N\) bare er mængden af ikke-negative heltal som er større end 0, så det er tilstrækkeligt at vise at \cref{eq:sumn} gælder for alle \(n\in\N_0\) med \(n\ge 1\) ved induktion, så det gør vi.
+\begin{description}
+\item[Induktionsbasis:] Hvis vi betragter \(n=1\), så får vi
+  \[
+    \frac{n(n+1)}{2}=\frac{1\cdot 2}{2}=1,
+    \]
+    og hvis vi tager summen af de første 1 heltal startende fra 1, så får vi også 1. Altså holder \cref{eq:sumn} for \(n=1\), og vi har vores basis.
+  \item[Induktionshypotese:] Vi antager at \(n\in\N_0\) er et tal så \(n\ge 1\) og \cref{eq:sumn} gælder for n.
+  \item[Induktionsskridt:] Vi viser nu, på baggrund af vores antagelse, at \cref{eq:sumn} gælder for \(n+1\). Vi har at
+    \[
+      1+2+\dots+(n+1)=1+2+\dots+n+(n+1)=\frac{n(n+1)}{2}+(n+1).
+      \]
+    Vi kan nu sætte de to udtryk i den nye sum på fælles nævner, så vi får
+    \begin{align*}
+      1+2+\dots+(n+1)&=\frac{n(n+1)+2(n+1)}{2}=\frac{n^2+n+2n+2}{2}\\
+      &=\frac{(n+1)\cdot n+(n+1)\cdot 2}{2}=\frac{(n+1)(n+2)}{2}.
+    \end{align*}
+    Det er jo præcis det udtryk vi gerne ville have, så vi har nu gennemført induktionsskridtet.
+\end{description}
+Vi har nu gennemført alle skridtene i induktionsbeviset, og har altså vist at \cref{eq:sumn} gælder for alle \(n\in\N_0\) med \(n\ge 1\), hvilket er det samme som at vise at det gælder for alle \(n\in\N\), og vi er færdige :)
+\end{proof}
+Nu kan du absolut destruere din matematiklærer ved at regne \(1+2+\dots+100\) på 2 sekunder. Nemt.
 \end{document}
