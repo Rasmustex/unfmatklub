@@ -85,14 +85,14 @@ Vi starter med at indføre en særlig mængde, som spiller en vigtig rolle for i
   \[
     \N:=\{1,2,3,\ldots\}.
   \]
-  Desuden definerer vi \(\N_0\) som de naturlige tal \emph{inklusiv 0} eller de \emph{positive heltal}, altså
+  Desuden definerer vi \(\N_0\) som de naturlige tal \emph{inklusiv 0} eller de \emph{ikke-negative heltal}, altså
   \[
     \N_0:=\{0,1,2,\ldots\}.
     \]
 \end{definition}
-Som matematikere kan vi godt lide at have meget konkrete og præcise definitioner, og hvis du viste ovenstående definition til den almægtige Gau{\ss}, ville han sandsynligvis fordømme de næste 10 generationer i din familie til et liv uden matematik. Der findes forskellige måder at definere de positive heltal på, bl.a. med mængdelære, men det er ikke dagens mål. Vores ``definition'' er nok til at forstå matematisk induktion, hvilket til gengæld er dagens mål.
+Som matematikere kan vi godt lide at have meget konkrete og præcise definitioner, og hvis du viste ovenstående definition til den almægtige Gau{\ss}, ville han sandsynligvis fordømme de næste 10 generationer i din familie til et liv uden matematik. Der findes forskellige måder at definere de ikke-negative heltal på, bl.a. med mængdelære, men det er ikke dagens mål. Vores ``definition'' er nok til at forstå matematisk induktion, hvilket til gengæld er dagens mål.
 
-Vores matematiske induktion kommer til at gøre brug af to grundlæggende fakta om de positive heltal tal, som vi her vil tage for givet. Det første princip er at hvis vi har et  tal \(n\in\N_0\), så er der et entydigt ``næste tal,'' netop \(n+1\). På samme måde har \(n\) også et entydigt ``forrige tal,'' altså hvis \(n\neq 0\).
+Vores matematiske induktion kommer til at gøre brug af to grundlæggende fakta om de ikke-negative heltal tal, som vi her vil tage for givet. Det første princip er at hvis vi har et  tal \(n\in\N_0\), så er der et entydigt ``næste tal,'' netop \(n+1\). På samme måde har \(n\) også et entydigt ``forrige tal,'' altså hvis \(n\neq 0\).
 
 Hvis vi skriver \(S(n)\) for ``tallet efter \(n\)'', så har vi særligt at ethvert tal \(m\in\N_0\) er på formen
 \[
@@ -114,7 +114,7 @@ Nu er den her endelig! Bevismetoden vi alle har ventet på! \emph{INDUKTION!!!}.
 \[
   2m<m^2
 \]
-gælder for alle positive heltal \(m\ge 3\). Vi kan jo starte med at tjekke at udsagnet holder for \(m=3\) -- hvis det ikke gør, har vi i hvert fald intet håb om at udsagnet kan være sandt. For \(m=3\) har vi
+gælder for alle ikke-negative heltal \(m\ge 3\). Vi kan jo starte med at tjekke at udsagnet holder for \(m=3\) -- hvis det ikke gør, har vi i hvert fald intet håb om at udsagnet kan være sandt. For \(m=3\) har vi
 \[
   2m=6,\ m^2=9.
   \]
@@ -141,5 +141,6 @@ gælder for alle positive heltal \(m\ge 3\). Vi kan jo starte med at tjekke at u
 
       Det kan sammenlignes med at klatre op af en stige: Hvis vi tager det første skridt op, og hvis det at vi tager et skridt op af stigen medfører at vi tager et skridt til, så når vi et hvilket som helst trin på stigen på et eller andet tidspunkt.
 
-      Her kommer den generelle procedure for et induktionsbevis.
+Vi kan tage proceduren ovenfor og generalisere den til udtryk om vilkårlige delmængder af 
+
 \end{document}
