@@ -69,16 +69,16 @@
     Vi viser sætningen ved induktion.
     \begin{description}
     \item[Induktionsbasis (\(n=1\)):] Trivielt.
-    \item[Induktionshypotese:] Lad \(n\ge 1\) være et heltal, og antag at alle pingviner i enhver samling af \(n\) pingviner har samme farve.
+    \item[Induktionshypotese:] Lad \(n\ge 1\) være et heltal, og antag at alle pingviner i enhver samling af \(n\) pingviner har samme højde.
     \item[Induktionsskridt:] Antag at vi har en samling af \(n+1\) pingviner. Kald pingvinerne \(h_1,h_2,\dots,h_{n+1}\). Samlingen
       \[
         \{h_1,h_2,\ldots,h_n\}
       \]
-        indeholder n pingviner, og derfor må alle pingviner i samlingen have samme farve. Ligeledes med samlingen
+        indeholder \(n\) pingviner, og derfor må alle pingviner i samlingen have samme højde. Ligeledes med samlingen
       \[
           \{h_2,h_3,\ldots,h_{n+1}\}.
       \]
-      Der er et overlap mellem de to samlinger af pingviner, og altså må alle pingvinerne i vores samling af \(n+1\) pingviner have samme farve.
+      Der er et overlap mellem de to samlinger af pingviner, og altså må alle pingvinerne i vores samling af \(n+1\) pingviner have samme højde.
     \end{description}
   \end{proof}
 \end{Exercise}
@@ -115,7 +115,7 @@ For alle \(n\in\N\).
     \item[Induktionsskridt:] Lad \(x,y\in\N\) sådan at \(\max(x,y)=n+1\). Så er \(\max(x-1,y-1)=n\), sådan at \(x-1=y-1\). Altså er \(x=y\), og induktionsskridtet er fuldført.
   \end{description}
 \end{proof}
- (Hint: Hvad sker der når \(n=2\)?)
+ (Hint: Hvad sker der når \(x=1\)?)
 \end{Exercise}
 \begin{Exercise}[label={ex:6}]
   \Question Find på en formel for
