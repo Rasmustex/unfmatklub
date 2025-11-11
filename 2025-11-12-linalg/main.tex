@@ -33,6 +33,7 @@
 \newtheorem{proposition}[saetning]{Proposition}
 
 \theoremstyle{definition}
+\newtheorem{observation}[saetning]{Observation}
 \newtheorem{definition}[saetning]{Definition}
 \newtheorem{eksempel}[saetning]{Eksempel}
 \newtheorem{notation}[saetning]{Notation}
@@ -55,12 +56,12 @@
 
 \lhead{UNF Odense Matematikklub}
 \chead{}
-\rhead{Matematisk Induktion}
+\rhead{Lineær Algebra}
 \cfoot{\thepage\ af \pageref{LastPage}}
 
 
-\title{UNF Odense Matematikklub: Lineær algebra}
-\author{Hjalte Vejbæk\\ \href{mailto:hdv@unf.dk}{hdv@unf.dk}\and Rasmus Hansen\\ \href{mailto:rhh@unf.dk}{rhh@unf.dk}\and Victor Heeks\\ \href{mailto:syhe@unf.dk}{syhe@unf.dk}}
+\title{UNF Odense Matematikklub: Lineær Algebra}
+\author{\href{mailto:matklub@odense.unf.dk}{matklub@odense.unf.dk}}
 \date{}
 
 
@@ -74,22 +75,23 @@
 \maketitle{}
 \thispagestyle{empty}
 
+\pagenumbering{gobble}
+\clearpage
+\pagenumbering{arabic}
 %start på dokument
 \newpage
-%%%%%%%%% TODO: Ordn pagenum counter på en andne måde
-\setcounter{page}{1}
 \section{Systemer af lineære ligninger}
 Du er sikkert stødt på 2 lineære ligninger i to ubekendte. Et eksempel er
 \[
   \arraycolsep=1.4pt%\def\arraystretch{2.2}
   \begin{array}{rcrcl}
-    2x&-&y&=&-3\\
+    2x&+&y&=&-3\\
     4x&-&2y&=&-9
   \end{array}
 \]
 Vi ved hvordan man løser disse ligninger, hvis altså de har en løsning. Vi kan først isolere \(x\) i den første ligning:
 \begin{align*}
-  2x-y=-3\\
+  2x+y=-3\\
   \Rightarrow 2x=-3-y\\
   \Rightarrow x=\frac{-3}{2}-\frac{y}{2}.
 \end{align*}
@@ -102,9 +104,9 @@ Vi kan sætte dette udtryk for \(x\) ind i ligning 2 og isolere \(y\).
 \end{align*}
 Vi har fundet \(y\). Vi kan nu indsætte \(y\) i den første ligning igen for at finde \(x\).
 \begin{align*}
-  2x-\frac{3}{4}=-3\\
-  \Rightarrow 2x=-\frac{9}{4}\\
-  \Rightarrow x=-\frac{9}{8}.
+  2x+\frac{3}{4}=-3\\
+  \Rightarrow 2x=-\frac{15}{4}\\
+  \Rightarrow x=-\frac{15}{8}.
 \end{align*}
 Denne proces er dog lidt nørklet. Desuden kan man overveje følgende:
 \begin{quote}
@@ -114,36 +116,48 @@ Godt nok kan man lave en lignende proces, men det bliver kun mere nørklet jo fl
 \begin{quote}
   \emph{Findes der en nemmere og mere generel måde at løse denne slags ligninger på?}
 \end{quote}
-Og, da matematikere er dovne, ønsker vi særligt en metode som kræver mindre tankevirksomhed. Heldigvis er svaret på vores spørgsmål et klart ``ja!'', og vi vil nu beskæftige os med en måde at gøre det på, kaldet \emph{Gau\ss-(Jordan)-elimination}.
-\section{Matricer og Gau\ss-Jordan-elimination}
+Og, da matematikere er dovne, ønsker vi særligt en metode som kræver mindre tankevirksomhed. Heldigvis er svaret på vores spørgsmål et klart ``ja!'', og vi vil nu beskæftige os med en måde at gøre det på, kaldet \emph{Gau\ss-(Jordan) elimination}.
+
+Vi skal dog først være præcise om hvad vi mener med lineære ligningssystemer
+\begin{definition}
+  En reel lineær ligning i variablene \(x_1,x_2,\ldots,x_n\) er en ligning på formen
+  \[
+    a_1x_1+a_2x_2+\cdots+a_nx_n=b,
+  \]
+  Hvor \(a_1,\ldots, a_n\) og \(b\) alle er reelle tal.
+
+  Et lineært ligningssystem i \(x_1,\ldots x_n\) er en samling af lineære ligninger i \(x_1,\ldots,x_n\). En løsning på et sådant ligningssystem er et valg af konkrete reelle tal \(y_1,\ldots y_n\), så samtlige ligninger bliver sande, når man indsætter \(y_1,\ldots,y_n\) på \(x_1,\ldots,x_n\)'s pladser.
+\end{definition}
+\section{Matricer og Gau\ss-Jordan elimination}
+\subsection*{Matricer}
 Vi betragter igen vores ligningssystem
 \[
   \arraycolsep=1.4pt%\def\arraystretch{2.2}
   \begin{array}{rcrcl}
-    2x&-&y&=&-3\\
+    2x&+&y&=&-3\\
     4x&-&2y&=&-9
   \end{array}
 \]
 I stedet for at skrive det op som ovenfor, kan vi skrive det op som en liste af tal på \emph{matrixform:}
 \[
   \begin{pNiceMatrix}[first-col,first-row]
-    & x & y & \\
-    \text{ligning 1} & 2 & -1 & -3\\
+    & x & y & \text{konstant}\\
+    \text{ligning 1} & 2 & 1 & -3\\
     \text{ligning 2} & 4 & -2 & -9
   \end{pNiceMatrix}
 \]
 Hver \emph{række} i matricen repræsenterer en af ligningerne. Den første \emph{søjle} af matricen repræsenterer koefficienterne foran \(x\) i ligninerne, mens den anden repræsenterer koefficienterne foran \(y\). Den sidste søje repræsenterer konstantleddet i de to ligninger. Vi kunne også have skrevet matricen som
 \[
   \begin{pmatrix}
-    -1 & 2 & -3\\
+    1 & 2 & -3\\
     -2 & 4 & -9
   \end{pmatrix},
 \]
 hvor vi altså har byttet om på \(x\) og \(y\)'s plads: Ligningssystemet er stadig det samme; vi har bare byttet om på pladserne for variablerne. Så længe én bestemt kolonne altid svarer til \emph{præcis ét} variabel, så er det en gyldig måde at skrive systemet op på. Dog er den sidste række \emph{altid} den, som svarer til konstantleddene. Derfor skriver vi også nogle gange matricen som
 \[
   \begin{pmatrix}[cc|c]
-    -1 & 2 & -3\\
-    -2 & 4 & -9
+    2 & 1 & -3\\
+    4 & -2 & -9
   \end{pmatrix}
 \]
 Helt generelt definerer vi nu matricer
@@ -166,7 +180,7 @@ Vi har nu en generel måde at skrive \(n\) lineære ligninger i \(n\) variable o
   a_{1,1}x_1&+&a_{1,2}x_2&+&\dots &+&a_{1,n}x_n&=&b_1\\
   a_{2,1}x_1&+&a_{2,2}x_2&+&\dots &+&a_{2,n}x_n&=&b_2\\
     &&&&&&&\hspace{2.5pt}\vdots&\\
-  a_{n,1}x_1&+&a_{n,2}x_2&+&\dots &+&a_{n,n}x_n&=&b_m
+  a_{m,1}x_1&+&a_{m,2}x_2&+&\dots &+&a_{m,n}x_n&=&b_m
   \end{array}
   \]
   får vi på naturlig vis en matrix
@@ -175,17 +189,16 @@ Vi har nu en generel måde at skrive \(n\) lineære ligninger i \(n\) variable o
       a_{1,1} & a_{1,2} & \ldots & a_{1,n} & b_1\\
       a_{2,1} & a_{2,2} & \ldots & a_{2,n} & b_2\\
       \vdots & \vdots & \ddots &\vdots & \vdots\\
-      a_{n,1} & a_{n,2} & \ldots & a_{n,n} & b_n
+      a_{m,1} & a_{m,2} & \ldots & a_{m,n} & b_m
     \end{pmatrix}.
   \]
-  \begin{quote}
     \emph{Men hvad kan vi bruge det til?}
-  \end{quote}
+\subsection*{Småt og godt om lineære ligningssystemer}
   Vi laver nu nogle generelle observationer om lineære ligningssystemer. Til det bruger vi igen vores modeleksempel
   \[
   \arraycolsep=1.4pt%\def\arraystretch{2.2}
   \begin{array}{rcrcl}
-    2x&-&y&=&-3\\
+    2x&+&y&=&-3\\
     4x&-&2y&=&-9
   \end{array}
   \]
@@ -196,26 +209,432 @@ Vi har nu en generel måde at skrive \(n\) lineære ligninger i \(n\) variable o
   \end{align*}
   Men vi kan bruge ligning 1 til at skrive \(-3\) om
   \begin{align*}
-    4x-2y+2x-y=-12\\
-    \Leftrightarrow 6x-3y=-12.
+    4x-2y+2x+y=-12\\
+    \Leftrightarrow 6x-y=-12.
   \end{align*}
   Vores oprindelige ligningssystem bliver altså nu til det ækvivalente ligningssystem
   \[
   \arraycolsep=1.4pt%\def\arraystretch{2.2}
   \begin{array}{rcrcl}
-    2x&-&y&=&-3\\
-    6x&-&3y&=&-12
+    2x&+&y&=&-3\\
+    6x&-&y&=&-12
   \end{array}
   \]
   Det giver os en generel regel:
-  \begin{quote}
+  \begin{observation}\label{obs:adder}
     \emph{i et lineært ligningssystem kan man lægge én ligning til en anden ligning og få et ækvivalent ligningssystem.}
-  \end{quote}
-  Vi kan omsætte vores observation til matricen som svarer til ligningssystemet.
+  \end{observation}
+  Vi kan omsætte vores observation til matricen som svarer til ligningssystemet. Det svarer til at lægge række 1 (\(R_1\)) til række 2 (\(R_2\))
+  \[
+  \begin{pmatrix}[cc|c]
+    2 & 1 & -3\\
+    4 & -2 & -9
+  \end{pmatrix}
+  \xRightarrow{R_2\to R_2+R_1}
+  \begin{pmatrix}[cc|c]
+    2 & 1 & -3\\
+    6 & -1 & -12
+  \end{pmatrix}
+\]
+Lad nu \(a\) være et reelt tal. Observer da at ligningen
+\[
+2x+y=-3
+\]
+er ækvivalent med
+\[
+  a(2x+y)=(a)(-3)
+\]
+\textbf{så længe \(a\neq 0\)}, fordi vi kan gange med \(1/a\) for at få den oprindelige ligning tilbage. Det følger os til en ny observation.
+\begin{observation}\label{obs:skaler}
+  I et lineært ligningssystem kan man gange en ligning med et tal forskelligt fra 0 og få et ækvivalent ligningssystem.
+\end{observation}
+Det vil sige at matricerne
+ \[   
+  \begin{pmatrix}[cc|c]
+    2 & 1 & -3\\
+    4 & -2 & -9
+  \end{pmatrix}
+ \]
+ og
+ \[   
+  \begin{pmatrix}[cc|c]
+    a\cdot 2 & 1\cdot a & -3\cdot a\\
+    4 & -2 & -9
+  \end{pmatrix}
+ \]
+ repræsenterer ækvivalente ligningssystemer, altså ligningssystemer hvis løsninger er det samme.
+\subsection*{Rækkeoperationer}
+Ud fra det forhenværende delafsnit kan vi nu komme frem til nogle operationer, som vi kan udføre på en matrix, uden at ændre på ligningssystemet, som repræsenteres. Inden vi gør det, bemærker vi lige en sidste ting.
+\begin{observation}\label{obs:byt}
+  Hvis man bytter om på to rækker i en matrix, indkoder den det samme ligningssystem som før.
+\end{observation}
+I praksis: Matricerne
+ \[   
+  \begin{pmatrix}[cc|c]
+    2 & 1 & -3\\
+    4 & -2 & -9
+  \end{pmatrix}
+ \]
+ og
+ \[   
+  \begin{pmatrix}[cc|c]
+    4 & -2 & -9\\
+    2 & 1 & -3
+  \end{pmatrix}
+ \]
+ indkoder det samme ligningssystem. Nu kan vi endelig definere \emph{rækkeoperationerne}.
+ \begin{definition}
+   Lad
+   \[
+     A=
+    \begin{pmatrix}
+      a_{11} & a_{12} &\ldots & a_{1n}\\
+      a_{21} & a_{22} & \ldots & a_{2n}\\
+      \vdots & \vdots & \ddots & \vdots\\
+      a_{m1} & a_{m2} & \ldots & a_{mn}
+    \end{pmatrix}
+   \]
+   være en \(m\times n\) reel matrix. Følgende operationer kaldes \emph{rækkeoperationer} på matricen:
+   \begin{enumerate}
+     \item At bytte om på to rækker i \(A\).
+     \item At gange en række i \(A\) med et reelt tal forskelligt fra \(0\).
+     \item At lægge én række i \(A\) til en anden række i \(A\). (eller alternativt, kombinere 2 og 3 til at gange en række med et tal \(a\neq 0\), så lægge den til en anden række, og så gange den første række med \(1/a\), så den er som før).
+   \end{enumerate}
+ \end{definition}
+ Ved brug af Observationerne \ref{obs:adder}, \ref{obs:skaler} og \ref{obs:byt} opnår vi følgende:
+ \begin{proposition}
+   Lad \(A,B\in M_{m\times n}(\R)\) være matricer. Hvis man kan nå frem til \(B\) fra \(A\) med endeligt mange rækkeoperationer, så repræsenterer \(A\) og \(B\) ækvivalente lineære ligningssystemer, altså:
+   \begin{itemize}
+   \item Systemet repræsenteret af \(A\) har en løsning hvis og kun hvis systemet repræsenteret af \(B\) har løsning;
+     \item Løsningsmængden for det ene system er præcis løsningsmængden for det andet system.
+   \end{itemize}
+ \end{proposition}
+ \subsection*{Gau\ss elimination, for real}
+ Rækkeoperationer er det værktøj, som vi vil bruge til at løse lineære ligningssystemer.
+ \begin{definition}
+   Lad \(A\) være en \(m\times n\)-matrix. Hvis en række \(R\) i \(A\) \emph{ikke} kun består af 0'er, så kalder vi den første plads i rækken fra venstre, hvor der er et tal forskelligt fra nul, for den ledende plads. Hvis \(R\) kun består af 0'er, siger vi at dens ledende plads er \(\infty\).
+ \end{definition}
+ \begin{eksempel}\label{eks:3b3}
+   I matricen
+   \[
+     \begin{pmatrix}
+       0 & 3 & 1\\
+       0 & 0 & 6\\
+       1 & 0 & 7 
+     \end{pmatrix}\in M_3(\R)
+   \]
+   er den ledende plads på række 1 den 2. plads. Den ledende plads på række 2 er den 3. plads, og den ledende plads på række 3 er den 1. plads.
+ \end{eksempel}
+ \begin{definition}
+   En \(m\times n\) matrix \(A\) er på \emph{række-echelon form} hvis følgende gælder:
 
-  Reskalering
-
-  Bytte om
+   For enhver række \(R\) i \(A\) er den ledende plads længere til højre (altså større) end den ledende plads i rækken over \(R\).
+ \end{definition}
+ \begin{eksempel}
+   Matricen fra eksempel \ref{eks:3b3} er \emph{ikke} på række-echelon form, da den ledende plads på række 3 er længere til venstre end den ledende plads på række 2. Matricen
+   \[
+     \begin{pmatrix}
+       0 &2& 1& -1\\
+       0 & 0 & 3 &1\\
+       0&0&0&0
+     \end{pmatrix}
+   \]
+   er dog på række-echelon form (\(\infty>3\)). Til gengæld er matricen
+   \[
+     \begin{pmatrix}
+       1 & 1\\
+       1 & 1
+     \end{pmatrix}
+     \]
+     ikke på række-echelon form.
+ \end{eksempel}
+ Hvis nu
+ \[
+    A=\begin{pmatrix}[ccc|c]
+      a_{1,1} & a_{1,2} &  a_{1,3} & b_1\\
+      a_{2,1} & a_{2,2} & a_{2,3} & b_2\\
+      a_{3,1} & a_{3,2} & a_{3,3} & b_3
+    \end{pmatrix}
+ \]
+ indkoder et ligningssystem, og \(A\) er på række-echeon-form, altså
+ \[
+    A=\begin{pmatrix}[ccc|c]
+      a_{1,1} & a_{1,2} &  a_{1,3} & b_1\\
+      0 & a_{2,2} & a_{2,3} & b_2\\
+      0 &0 & a_{3,3} & b_3
+    \end{pmatrix},
+ \]
+ så repræsenterer \(A\) ligningerne
+ \begin{align*}
+   a_{1,1} x_1+a_{1,2}x_2+a_{1,3}x_3&=b_2\\
+   a_{2,2}x_2+a_{2,3}x_3&=b_2\\
+   a_{3,3}x_3&=b_3,
+ \end{align*}
+ i de ubekendte \(x_1,x_2,x_3\), og så kan vi jo nemt aflæse løsningen ved at bemærke at \(x_3=b_1/a_{3,3}\), \(x_2=\frac{b_2-a_{2,3}x_3}{a_{2,2}}\), etc, hvis altså \(a_{1,1},a_{2,2},a_{3,3}\neq 0\). Hvis de ikke alle er forskellige fra 0 kan man stå i et par forskellige situationer.
+ \begin{enumerate}
+ \item Systemet har ingen løsninger. Det sker hvis man får en række hvor alle pladser er 0, ud over den sidste plads, hvor der er et tal \(b\neq 0\). Det ville nemlig svare til at
+   \[
+     0=0x_1+0x_2+\ldots+0x_n=b\neq 0,
+     \]
+     hvilket er umuligt. Alternativt kan man stå i følgende situation i stedet:
+  \item Der er \emph{frie variable} i systemet; variable hvis værdi vi kan vælge til at være hvad som helst, og stadig opnå en løsning til systemet.
+ \end{enumerate}
+ Vi kommer til at kigge på begge situationer i eksempler. Nøgleobservationen er dog følgende
+ \begin{observation}
+   Man kan løse et lineært ligningssystem (hvis det har en løsning) ved at udføre rækkeoperationer på systemets matrix indtil den opnår række-echelon form.
+ \end{observation}
+ \begin{definition}
+   \emph{Gau\ss}-elimination af en matrix er at udføre rækkeoperationer på matricen indtil den opnår række-echelonform.
+ \end{definition}
+ \begin{eksempel}
+   Vi ønsker at løse vores model-eksempel med Gau\ss-elimination. Betragt ligningssystemet
+\[
+  \arraycolsep=1.4pt%\def\arraystretch{2.2}
+  \begin{array}{rcrcl}
+    2x&+&y&=&-3\\
+    4x&-&2y&=&-9
+  \end{array}
+\]
+og dets tilhørende matrix
+\[
+  \begin{pmatrix}[cc|c]
+    2 & 1 & -3\\
+    4 & -2 & -9
+  \end{pmatrix}.
+\]
+På den første række i matricen er den ledende plads 1. Vi skal derfor have gjort tallet på række 2, søjle 1 til et 0. Det kan vi gøre med en rækkeoperation:
+\[
+  \begin{pmatrix}[cc|c]
+    2 & 1 & -3\\
+    4 & -2 & -9
+  \end{pmatrix}\xRightarrow{R_2\to R_2-2\cdot R_1}\begin{pmatrix}[cc|c]
+    2 & 1 & -3\\
+    0 & -4 &-3 
+  \end{pmatrix}.
+  \]
+  Det giver os ligningerne
+  \begin{align*}
+    -4y&=-3\\
+    2x+y&=-3.
+  \end{align*}
+  Man kan nu finde \(y\) ved at dividere med \(-4\) i den første ligning, og så sætte \(y\) ind i den anden ligning. Så får man, som vi også så i det første afsnit, at \(x=\frac{-15}{8}\), \(y=\frac{3}{4}\)
+ \end{eksempel}
+Godt nok var det simplere for os at Gau\ss-eliminere systemet end at regne det direkte, men der er måske ikke så tydelig en fordel når kun vi har to ligninger og to ubekendte. I næste afsnit vil vi blandt andet kigge på større ligningssystemer.
+ \subsection*{Gau\ss-Jordan elimination}
+ Hvis man ikke gider lave det ekstra arbejde med at finde værdierne af sine variable efter at have Gau\ss-elimineret en matrix, så kan man Gau\ss-Jordan eliminere den. I Gau\ss-Jordan elimination reducerer man en matrix til \emph{reduceret} række-echelon form. Det betyder at for enhver række \(R\) i vores matrix gælder følgende:
+ \begin{enumerate}
+ \item Tallet på den ledende plads er 1
+   \item Hvis den ledende plads på \(R\) er \(n\), så er tallet på plads \(n\) på alle andre rækker lig med 0.
+ \end{enumerate}
+ \begin{eksempel}
+   Matricen
+   \[
+     \begin{pmatrix}
+    2 & 1 & -3\\
+    0 & -4 &-3 
+     \end{pmatrix}
+     \]
+     er \emph{ikke} på reduceret række-echelonform, men matricen
+     \[
+       \begin{pmatrix}
+         0 & 1 & 0 & 0 & 4\\
+         0 & 0 & 1 & 0 & 0\\
+         0 & 0 & 0 & 0 & 1
+       \end{pmatrix}
+     \]
+     er til gengæld.
+ \end{eksempel}
+ Fordelen ved Gau\ss-Jordan elimination er at det er nemmere at aflæse løsningen fra matricen; ulempen er at man skal bruge flere rækkeoperationer.
+ \subsection*{Eksempler}
+ Lad os eliminere nogle matricer
+ \begin{eksempel}
+   Vi er givet ligningssystemet
+   \begin{align*}
+     -2x+2y+z&=7\\
+     2x-8y+5z&=0\\
+     19x-10y+22z&=3.
+   \end{align*}
+   Vi skriver den tilsvarende matrix op,
+   \[
+     \begin{pmatrix}[ccc|c]
+       -2 & 2 & 1 & 7\\
+       2 & -8 & 5 &  0\\
+       19 & -10 & 22 & 3
+     \end{pmatrix},
+   \]
+   og udfører nu Gau\ss-Jordan elimination. Vi skal først have nuller på plads 1 på alle rækker under række 1, mens vi skal have ændret \(-2\) på række 1, plads 1 til \(1\)
+   \begin{gather*}
+     \begin{pmatrix}[ccc|c]
+       -2 & 2 & 1 & 7\\
+       2 & -8 & 5 &  0\\
+       19 & -10 & 22 & 3
+     \end{pmatrix}
+     \xRightarrow{R_2\to R_2+R_1}
+     \begin{pmatrix}[ccc|c]
+       -2 & 2 & 1 & 7\\
+       0 & -6 & 6 &  7\\
+       19 & -10 & 22 & 3
+     \end{pmatrix}\\
+     \xRightarrow{R_1\to -\frac{1}{2}R_1}
+     \begin{pmatrix}[ccc|c]
+       1 & -1 & -1/2 & -7/2\\
+       0 & -6 & 6 &  7\\
+       19 & -10 & 22 & 3
+     \end{pmatrix}\\
+     \xRightarrow{R_3\to R_3-19\cdot R_1}
+     \begin{pmatrix}[ccc|c]
+       1 & -1 & -1/2 & -7/2\\
+       0 & -6 & 6 &  7\\
+       0 & 9 & 22+19/2 & 3+133/2
+     \end{pmatrix}= \begin{pmatrix}[ccc|c]
+       1 & -1 & -1/2 & -7/2\\
+       0 & -6 & 6 &  7\\
+       0 & 9 & 63/2 & 139/2
+     \end{pmatrix}.
+   \end{gather*}
+   Vi skal nu udføre samme process for række 2. Bemærk at både pladserne over og under den førende plads skal blive 0.
+   \begin{gather*}
+    \begin{pmatrix}[ccc|c]
+       1 & -1 & -1/2 & -7/2\\
+       0 & -6 & 6 &  7\\
+       0 & 9 & 63/2 & 139/2
+    \end{pmatrix}
+    \xRightarrow{R_2\to -\frac{1}{6}R_2}
+    \begin{pmatrix}[ccc|c]
+       1 & -1 & -1/2 & -7/2\\
+       0 & 1 & -1 &  -7/6\\
+       0 & 9 & 63/2 & 139/2
+    \end{pmatrix}\\
+    \xRightarrow{R_1\to R_1+R_2}
+    \begin{pmatrix}[ccc|c]
+       1 & 0 & -3/2 & -7/2-7/6\\
+       0 & 1 & -1 &  -7/6\\
+       0 & 9 & 63/2 & 139/2
+    \end{pmatrix}=
+    \begin{pmatrix}[ccc|c]
+       1 & 0 & -3/2 & -14/3\\
+       0 & 1 & -1 &  -7/6\\
+       0 & 9 & 63/2 & 139/2
+    \end{pmatrix}\\
+    \xRightarrow{R_3\to R_3-9\cdot R_2}
+    \begin{pmatrix}[ccc|c]
+       1 & 0 & -3/2 & -14/3\\
+       0 & 1 & -1 &  -7/6\\
+       0 & 0 & 63/2+18/2 & 139/2+63/6
+    \end{pmatrix}=
+    \begin{pmatrix}[ccc|c]
+       1 & 0 & -3/2 & -14/3\\
+       0 & 1 & -1 &  -7/6\\
+       0 & 0 & 81/2 & 480/6
+    \end{pmatrix}\\=
+    \begin{pmatrix}[ccc|c]
+       1 & 0 & -3/2 & -14/3\\
+       0 & 1 & -1 &  -7/6\\
+       0 & 0 & 81/2 & 80
+    \end{pmatrix}.
+   \end{gather*}
+   Nu skal processen bare udføres for række 3.
+   \begin{gather*}
+    \begin{pmatrix}[ccc|c]
+       1 & 0 & -3/2 & -14/3\\
+       0 & 1 & -1 &  -7/6\\
+       0 & 0 & 81/2 & 80
+    \end{pmatrix}
+    \xRightarrow{R_3\to R_3\cdot 2/81}
+    \begin{pmatrix}[ccc|c]
+       1 & 0 & -3/2 & -14/3\\
+       0 & 1 & -1 &  -7/6\\
+       0 & 0 & 1 & 160/81 
+    \end{pmatrix}\\
+    \xRightarrow{R_2\to R_2+R_3}
+    \begin{pmatrix}[ccc|c]
+       1 & 0 & -3/2 & -14/3\\
+       0 & 1 & 0 &  -7/6+160/81\\
+       0 & 0 & 1 & 160/81 
+    \end{pmatrix}\\
+    \xRightarrow{R_1\to R_1+3/2R_3}
+    \begin{pmatrix}[ccc|c]
+       1 & 0 & 0 & -14/3+480/162\\
+       0 & 1 & 0 &  -7/6+160/81\\
+       0 & 0 & 1 & 160/81 
+    \end{pmatrix}\\=
+    \begin{pmatrix}[ccc|c]
+       1 & 0 & 0 & -46/27\\
+       0 & 1 & 0 &  131/162\\
+       0 & 0 & 1 & 160/81 
+    \end{pmatrix}
+   \end{gather*}
+   Altså har vi løst ligningssystemet.
+ \end{eksempel}
+ \begin{eksempel}[Et uløseligt ligningssystem]
+   Betragt ligningsssytemet
+   \[
+  \begin{array}{rcrcl}
+    2x&-&y&=&-3\\
+    4x&-&2y&=&-9.
+  \end{array}
+  \]
+  Ved Gau\ss-Jordan elimination fås
+  \begin{gather*}
+    \begin{pmatrix}[cc|c]
+      2 & -1 & -3\\
+      4 & -2 & -9
+    \end{pmatrix}
+    \xRightarrow{R_2\to R_2-2\cdot R_1}
+    \begin{pmatrix}[cc|c]
+      2 & -1 & -3\\
+      0 & 0 & -3
+    \end{pmatrix}\\
+    \xRightarrow{R_1\to \frac{1}{2}R_1}
+    \begin{pmatrix}[cc|c]
+      1 & -1/2 & -3/2\\
+      0 & 0 & -3
+    \end{pmatrix}.
+  \end{gather*}
+  Det viser at vores oprindelige ligningssystem er ækvivalent med
+  \begin{align*}
+    x-\frac{y}{2}=-\frac{3}{2}\\
+    0=-3.
+  \end{align*}
+  Men \(0=-3\) er ikke muligt, hvilket vil sige at ligningssystemet er \emph{ukonsistent}, og at der derfor ingen løsning findes.
+ \end{eksempel}
+ \begin{eksempel}[Frie variable]
+   Betragt matricen
+   \[
+     \begin{pmatrix}[ccc|c]
+       1 & 0 & -3 & 7\\
+       0 & 1 & 2 & -5\\
+       0 & 0 & 0 & 0
+     \end{pmatrix}.
+   \]
+   Den svarer til ligningssystemet
+   \begin{align*}
+     x_1-3x_3&=7\\
+     x_2+2x_3&=-5.
+   \end{align*}
+   Altså får vi
+   \[
+     x_1=7-3x_3, \quad x_2=-5-2x_3.
+   \]
+   Bemærk at uanset hvilket \(x_3\) vi vælger, så er kan vi få en løsning til ligningssystemet ved at vælge \(x_1\) og \(x_2\) ud for ovenstående ligning. Det vil sige, at \(x_3\) er et \emph{frit variabel}: Vi kan vælge det til at være hvad som helst, og stadig få en løsning til ligningssystemet. Dette er en effekt af at der er en række i matricen, som kun består af 0'er. Vi har altså egentlig flere ligninger end variable.
+ \end{eksempel}
 \section{At regne med matricer}
-Plus, skalering og gange. Identitetsmatricen og invertible matricer
+\begin{itemize}
+\item Addition
+\item Skalering
+\item Multiplikation (måske som prikprodukt)
+\item Identitet og invertibilitet
+\item \(M_1(\R)\simeq \R\).
+\end{itemize}
+\section{Opgaver}
+\begin{itemize}
+  \item Løs et par ligningssystemer
+\item Ligningssystemer som lineære matrixligninger
+\item Invertibilitet af \(A\) i \(A\vec x =\vec b\) hviss entydig løsning
+\item Rækkeoperationer som matrixmultiplikation. Find udtryk for \(A^{-1}\)
+\item Find to matricer som ikke kommuterer
+\item Vis at \((AB)^{-1}=B^{-1}A^{-1}\)
+  \item Vis kommutation med invers medfører invers kommuterer med ikke-invers
+\item Vis at \(M_1(\R)\simeq \R\)
+\end{itemize}
 \end{document}
