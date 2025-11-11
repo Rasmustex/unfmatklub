@@ -1,0 +1,220 @@
+\documentclass[a4paper, 12pt]{article}
+
+\usepackage{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[danish]{babel} %[british, UKenglish, USenglish, english, american]
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{mathtools}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+%\geometry{verbose,tmargin=3cm,bmargin=3cm, lmargin=2.5cm, rmargin=2.5cm,headheight=1.5cm,headsep=1.5cm}
+
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage[hidelinks]{hyperref}
+\usepackage{cleveref}
+
+\usepackage{lastpage}
+\usepackage{listings}
+
+
+\usepackage{enumitem}
+\numberwithin{equation}{section}
+\theoremstyle{plain}
+\newtheorem{saetning}{Sætning}[section]
+\newtheorem{lemma}[saetning]{Lemma}
+\newtheorem{korollar}[saetning]{Korollar}
+\newtheorem{proposition}[saetning]{Proposition}
+
+\theoremstyle{definition}
+\newtheorem{definition}[saetning]{Definition}
+\newtheorem{eksempel}[saetning]{Eksempel}
+\newtheorem{notation}[saetning]{Notation}
+
+\crefname{equation}{ligning}{ligninger}
+\DeclarePairedDelimiter{\ps}{(}{)}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\R}{\mathbb{R}}
+
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+\makeatother
+
+\usepackage{nicematrix}
+
+%\setlength\parindent{0pt} % ingen indention ved linjeskift
+
+\lhead{UNF Odense Matematikklub}
+\chead{}
+\rhead{Matematisk Induktion}
+\cfoot{\thepage\ af \pageref{LastPage}}
+
+
+\title{UNF Odense Matematikklub: Lineær algebra}
+\author{Hjalte Vejbæk\\ \href{mailto:hdv@unf.dk}{hdv@unf.dk}\and Rasmus Hansen\\ \href{mailto:rhh@unf.dk}{rhh@unf.dk}\and Victor Heeks\\ \href{mailto:syhe@unf.dk}{syhe@unf.dk}}
+\date{}
+
+
+\begin{document}
+\NiceMatrixOptions
+  {
+    code-for-first-col = \scriptstyle ,
+    code-for-first-row = \scriptstyle 
+  }
+
+\maketitle{}
+\thispagestyle{empty}
+
+%start på dokument
+\newpage
+%%%%%%%%% TODO: Ordn pagenum counter på en andne måde
+\setcounter{page}{1}
+\section{Systemer af lineære ligninger}
+Du er sikkert stødt på 2 lineære ligninger i to ubekendte. Et eksempel er
+\[
+  \arraycolsep=1.4pt%\def\arraystretch{2.2}
+  \begin{array}{rcrcl}
+    2x&-&y&=&-3\\
+    4x&-&2y&=&-9
+  \end{array}
+\]
+Vi ved hvordan man løser disse ligninger, hvis altså de har en løsning. Vi kan først isolere \(x\) i den første ligning:
+\begin{align*}
+  2x-y=-3\\
+  \Rightarrow 2x=-3-y\\
+  \Rightarrow x=\frac{-3}{2}-\frac{y}{2}.
+\end{align*}
+Vi kan sætte dette udtryk for \(x\) ind i ligning 2 og isolere \(y\).
+\begin{align*}
+  4\ps*{\frac{-3}{2}-\frac{y}{2}}-2y=-9\\
+  \Rightarrow -6-2y-2y=-9\\
+  \Rightarrow -4y=-3\\
+  \Rightarrow y = \frac{3}{4}.
+\end{align*}
+Vi har fundet \(y\). Vi kan nu indsætte \(y\) i den første ligning igen for at finde \(x\).
+\begin{align*}
+  2x-\frac{3}{4}=-3\\
+  \Rightarrow 2x=-\frac{9}{4}\\
+  \Rightarrow x=-\frac{9}{8}.
+\end{align*}
+Denne proces er dog lidt nørklet. Desuden kan man overveje følgende:
+\begin{quote}
+  \emph{Hvad nu hvis man havde 3 lineære ligninger i 3 ubekendte? Eller \(n\) ligninger i \(n\) ubekendte for \(n\ge 3\)?}
+\end{quote}
+Godt nok kan man lave en lignende proces, men det bliver kun mere nørklet jo flere ligninger man tilføjer. Det er i denne slags situation at man som matematiker bør overveje
+\begin{quote}
+  \emph{Findes der en nemmere og mere generel måde at løse denne slags ligninger på?}
+\end{quote}
+Og, da matematikere er dovne, ønsker vi særligt en metode som kræver mindre tankevirksomhed. Heldigvis er svaret på vores spørgsmål et klart ``ja!'', og vi vil nu beskæftige os med en måde at gøre det på, kaldet \emph{Gau\ss-(Jordan)-elimination}.
+\section{Matricer og Gau\ss-Jordan-elimination}
+Vi betragter igen vores ligningssystem
+\[
+  \arraycolsep=1.4pt%\def\arraystretch{2.2}
+  \begin{array}{rcrcl}
+    2x&-&y&=&-3\\
+    4x&-&2y&=&-9
+  \end{array}
+\]
+I stedet for at skrive det op som ovenfor, kan vi skrive det op som en liste af tal på \emph{matrixform:}
+\[
+  \begin{pNiceMatrix}[first-col,first-row]
+    & x & y & \\
+    \text{ligning 1} & 2 & -1 & -3\\
+    \text{ligning 2} & 4 & -2 & -9
+  \end{pNiceMatrix}
+\]
+Hver \emph{række} i matricen repræsenterer en af ligningerne. Den første \emph{søjle} af matricen repræsenterer koefficienterne foran \(x\) i ligninerne, mens den anden repræsenterer koefficienterne foran \(y\). Den sidste søje repræsenterer konstantleddet i de to ligninger. Vi kunne også have skrevet matricen som
+\[
+  \begin{pmatrix}
+    -1 & 2 & -3\\
+    -2 & 4 & -9
+  \end{pmatrix},
+\]
+hvor vi altså har byttet om på \(x\) og \(y\)'s plads: Ligningssystemet er stadig det samme; vi har bare byttet om på pladserne for variablerne. Så længe én bestemt kolonne altid svarer til \emph{præcis ét} variabel, så er det en gyldig måde at skrive systemet op på. Dog er den sidste række \emph{altid} den, som svarer til konstantleddene. Derfor skriver vi også nogle gange matricen som
+\[
+  \begin{pmatrix}[cc|c]
+    -1 & 2 & -3\\
+    -2 & 4 & -9
+  \end{pmatrix}
+\]
+Helt generelt definerer vi nu matricer
+\begin{definition}
+  En \emph{reel} \(m\times n\) matrix, eller en matrix med \(m\) rækker og \(n\) søjler, er en liste af tal
+  \[
+    \begin{pmatrix}
+      a_{11} & a_{12} &\ldots & a_{1n}\\
+      a_{21} & a_{22} & \ldots & a_{2n}\\
+      \vdots & \vdots & \ddots & \vdots\\
+      a_{m1} & a_{m2} & \ldots & a_{mn}
+    \end{pmatrix}
+  \]
+  hvor hvert \(a_{ij}\) ligger i \(\R\). Mængden af alle \(m\times n\)-matricer skriver vi som \(M_{m\times n}(\R)\). Hvis \(n=m\) skriver vi dog \(M_n(\R):=M_{n\times n}(\R)\).
+\end{definition}
+Vi har nu en generel måde at skrive \(n\) lineære ligninger i \(n\) variable op i en \(n\times (n+1)\)-matrix: Hvis vi har et system af ligninger
+\[
+  \arraycolsep=1.4pt%\def\arraystretch{2.2}
+  \begin{array}{llllllllcl}
+  a_{1,1}x_1&+&a_{1,2}x_2&+&\dots &+&a_{1,n}x_n&=&b_1\\
+  a_{2,1}x_1&+&a_{2,2}x_2&+&\dots &+&a_{2,n}x_n&=&b_2\\
+    &&&&&&&\hspace{2.5pt}\vdots&\\
+  a_{n,1}x_1&+&a_{n,2}x_2&+&\dots &+&a_{n,n}x_n&=&b_m
+  \end{array}
+  \]
+  får vi på naturlig vis en matrix
+  \[
+    \begin{pmatrix}[cccc|c]
+      a_{1,1} & a_{1,2} & \ldots & a_{1,n} & b_1\\
+      a_{2,1} & a_{2,2} & \ldots & a_{2,n} & b_2\\
+      \vdots & \vdots & \ddots &\vdots & \vdots\\
+      a_{n,1} & a_{n,2} & \ldots & a_{n,n} & b_n
+    \end{pmatrix}.
+  \]
+  \begin{quote}
+    \emph{Men hvad kan vi bruge det til?}
+  \end{quote}
+  Vi laver nu nogle generelle observationer om lineære ligningssystemer. Til det bruger vi igen vores modeleksempel
+  \[
+  \arraycolsep=1.4pt%\def\arraystretch{2.2}
+  \begin{array}{rcrcl}
+    2x&-&y&=&-3\\
+    4x&-&2y&=&-9
+  \end{array}
+  \]
+  Vi kan lægge \(-3\) til på begge sider af ligning nr. 2, og få en ækvivalent ligning.
+  \begin{align*}
+    4x-2y-3=-9-3\\
+    \Leftrightarrow 4x-2y+(-3)=-12.
+  \end{align*}
+  Men vi kan bruge ligning 1 til at skrive \(-3\) om
+  \begin{align*}
+    4x-2y+2x-y=-12\\
+    \Leftrightarrow 6x-3y=-12.
+  \end{align*}
+  Vores oprindelige ligningssystem bliver altså nu til det ækvivalente ligningssystem
+  \[
+  \arraycolsep=1.4pt%\def\arraystretch{2.2}
+  \begin{array}{rcrcl}
+    2x&-&y&=&-3\\
+    6x&-&3y&=&-12
+  \end{array}
+  \]
+  Det giver os en generel regel:
+  \begin{quote}
+    \emph{i et lineært ligningssystem kan man lægge én ligning til en anden ligning og få et ækvivalent ligningssystem.}
+  \end{quote}
+  Vi kan omsætte vores observation til matricen som svarer til ligningssystemet.
+
+  Reskalering
+
+  Bytte om
+\section{At regne med matricer}
+\end{document}
